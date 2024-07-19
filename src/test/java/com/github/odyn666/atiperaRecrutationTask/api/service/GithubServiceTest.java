@@ -91,10 +91,10 @@ public class GithubServiceTest {
             throws UserNotFoundException, IOException {
 
         // Given
-        HttpUriRequest request = new HttpGet("http://localhost:8090/api/github/repositories?username=" + OWNER);
+        HttpUriRequest request = new HttpGet("http://localhost:8080/api/github/repositories?username=" + OWNER);
         request.addHeader("Accept", "application/json");
 
-        request.addHeader("Authorization", githubToken);
+        //request.addHeader("Authorization", githubToken);
 
 
         // When
@@ -138,7 +138,7 @@ public class GithubServiceTest {
     public void givenRequestHeaderWithNoAcceptHeader() throws IOException {
 
         String header = "application/json";
-        HttpUriRequest request = new HttpGet("http://localhost:8090/api/github/repositories?username=odyn666");
+        HttpUriRequest request = new HttpGet("http://localhost:8080/api/github/repositories?username=odyn666");
 
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
         log.info(response.toString());
