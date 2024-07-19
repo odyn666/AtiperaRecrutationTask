@@ -53,8 +53,7 @@ public class GithubServiceTest {
     private static final String OWNER = "odyn666";
     private static final String REPO_NAME = "DrivingSchoolMenagmetSystem";
     private static final String GITHUB_USER_API = "https://api.github.com/users/";
-    @Value("${github.token}")
-    private String githubToken;
+
 
     /**
      * Initializes the GitHubService with the provided RestTemplate and API URLs.
@@ -93,9 +92,6 @@ public class GithubServiceTest {
         // Given
         HttpUriRequest request = new HttpGet("http://localhost:8080/api/github/repositories?username=" + OWNER);
         request.addHeader("Accept", "application/json");
-
-        //request.addHeader("Authorization", githubToken);
-
 
         // When
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
