@@ -1,6 +1,8 @@
 package com.github.odyn666.atiperaRecrutationTask.service;
 
+import ch.qos.logback.core.pattern.parser.OptionTokenizer;
 import com.github.odyn666.atiperaRecrutationTask.dto.GitHubDTO;
+import com.github.odyn666.atiperaRecrutationTask.exception.UserNotFoundException;
 import com.github.odyn666.atiperaRecrutationTask.model.BranchModel;
 import com.github.odyn666.atiperaRecrutationTask.model.GitHubRepositoryModel;
 import com.github.odyn666.atiperaRecrutationTask.model.GitHubUserModel;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -26,16 +29,12 @@ public class GitHubService {
     private String githubReposApiUrl;
     private RestTemplate restTemplate = new RestTemplate();
 
-    /**
-     * Validates the existence of a GitHub user by making a GET request to the GitHub API using the provided username.
-     *
-     * @param username The username of the GitHub user to be validated.
-     * @return An Optional containing the GitHubUserModel object if the user exists, otherwise an empty Optional.
-     */
+
     public Optional<GitHubUserModel> validateUsername(String username) {
         String url = githubUsersApiUrl + username;
 
         return Optional.ofNullable(restTemplate.getForObject(url, GitHubUserModel.class));
+
     }
 
     /**

@@ -3,6 +3,7 @@ package com.github.odyn666.atiperaRecrutationTask.controller;
 import com.github.odyn666.atiperaRecrutationTask.dto.GitHubDTO;
 import com.github.odyn666.atiperaRecrutationTask.exception.BadHeaderException;
 import com.github.odyn666.atiperaRecrutationTask.exception.UserNotFoundException;
+import com.github.odyn666.atiperaRecrutationTask.model.GitHubUserModel;
 import com.github.odyn666.atiperaRecrutationTask.service.GitHubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,8 @@ public class GitHubTaskController {
             throw new BadHeaderException(HttpStatus.NOT_FOUND.value(), "INVALID ACCEPT HEADER");
         }
 
-        gitHubService.validateUsername(username).orElseThrow(() -> new UserNotFoundException(HttpStatus.NOT_FOUND.value(), "USER NOT FOUND")); //validation that username is correct
-
-        List<GitHubDTO> repositories = gitHubService.getDTOs(username);
+        GitHubUserModel gitHubUserModel = gitHubService.validateUsername(username).orElseThrow(() -> new UserNotFoundException(HttpStatus.NOT_FOUND.value(), "USER NOT FOUND"));
+        List<GitHubDTO> repositories = gitHubService.getDTOs(gitHubUserModel.getLogin());
 
         return ResponseEntity.ok(repositories);
     }
